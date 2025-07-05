@@ -58,7 +58,7 @@
       width: 100%;
     }
     button:active {
-      transform: scale(0.96);
+      transform: scale(1.2);
       box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
     }
     button:hover {
@@ -94,7 +94,7 @@
       bottom: 0;
       width: 100%;
       background: rgba(255, 255, 255, 0.6);
-      backdrop-filter: blur(10px);
+      backdrop-filter: blur(30px);
       -webkit-backdrop-filter: blur(10px);
       padding: 10px 5px;
       text-align: center;
@@ -125,7 +125,7 @@
     <h1>متابعة حجز الجلسة</h1>
     <p class="label">من فضلك أدخل الكود الخاص بك:</p>
     <input type="text" id="codeInput" placeholder="أدخل الكود هنا...">
-    <button onclick="checkBooking()">عرض الحجز</button>
+    <button id="viewBtn">عرض الحجز</button>
 
     <div id="result"></div>
   </div>
@@ -138,6 +138,13 @@
 
   <script>
     function formatDateDMY(dateStr) {
+      const parts = dateStr.split(/[\/-]/);
+      if (parts.length === 3) {
+        let year = parts[0].length === 4 ? parts[0] : parts[2];
+        let month = parts[1].padStart(2, '0');
+        let day = parts[0].length === 4 ? parts[2].padStart(2, '0') : parts[0].padStart(2, '0');
+        return `${day}/${month}/${year}`;
+      }
       const d = new Date(dateStr);
       if (isNaN(d)) return dateStr;
       const day = ('0' + d.getDate()).slice(-2);
@@ -182,6 +189,8 @@
         console.error("Fetch or JSON error", error);
       }
     }
+
+    document.getElementById("viewBtn").addEventListener("click", checkBooking);
   </script>
 </body>
 </html>
