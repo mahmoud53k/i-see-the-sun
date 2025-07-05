@@ -137,6 +137,15 @@
   </footer>
 
   <script>
+    function formatDateDMY(dateStr) {
+      const d = new Date(dateStr);
+      if (isNaN(d)) return dateStr;
+      const day = ('0' + d.getDate()).slice(-2);
+      const month = ('0' + (d.getMonth() + 1)).slice(-2);
+      const year = d.getFullYear();
+      return `${day}/${month}/${year}`;
+    }
+
     async function checkBooking() {
       const code = document.getElementById("codeInput").value.trim();
       const resultDiv = document.getElementById("result");
@@ -163,8 +172,8 @@
               <p><strong>👤 الاسم:</strong> ${data.name}</p>
               <p><strong>👨‍⚕️ المعالج:</strong> ${data.doctor}</p>
               <p><strong>📝 نوع الجلسة:</strong> ${data.sessionType}</p>
-              <p><strong>🗓️ تاريخ الجلسة:</strong> ${data.sessionDate}</p>
-              <p><strong>📌 تاريخ التسجيل:</strong> ${data.registrationDate}</p>
+              <p><strong>🗓️ تاريخ الجلسة:</strong> ${formatDateDMY(data.sessionDate)}</p>
+              <p><strong>📌 تاريخ التسجيل:</strong> ${formatDateDMY(data.registrationDate)}</p>
             </div>
           `;
         }
